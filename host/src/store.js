@@ -1,15 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
+import create from "zustand";
 
-const CounterContext = createContext([0, () => {}]);
+const useStore = create((set) => ({
+  count: 0,
+  increment: () => set((state) => ({ count: state.count + 1 })),
+  decrement: () => set((state) => ({ count: state.count - 1 })),
+  clear: () => set(() => ({ count: 0 })),
+}));
 
-export const CounterProvider = ({ children }) => {
-  return (
-    <CounterContext.Provider value={useState(0)}>
-      {children}
-    </CounterContext.Provider>
-  );
-};
-
-export const useCount = () => {
-  return useContext(CounterContext);
-};
+export default useStore;
